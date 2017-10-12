@@ -26,7 +26,7 @@ class ViewBookListTest extends TestCase
     function user_sees_alert_message_when_there_are_no_books()
     {
         $this->get('/books')
-            ->assertSee('There are no books added yet! Please add a new book.');
+            ->assertSee('No books to show');
     }
 
     /** @test */
