@@ -53,7 +53,7 @@
                         </table>
                     </div>
                     <div style="text-align:center;">
-                        {{ $books->appends(['sortBy' => request('sortBy'), 'direction' => request('direction')])->links() }}
+                        {{ $books->appends($append)->links() }}
                     </div>
                 @else
                     <div class="panel panel-body">

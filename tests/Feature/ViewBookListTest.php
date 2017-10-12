@@ -60,7 +60,7 @@ class ViewBookListTest extends TestCase
             'author' => 'Matt Stauffer'
         ]);
 
-        $response = $this->get('/books?searchBy=title&searchValue=Deep%20Work')
+        $response = $this->get('/books?title=Deep%20Work')
             ->assertSee('Deep Work')
             ->assertSee('Cal Newport')
             ->assertDontSee('Laravel - Up and Running')

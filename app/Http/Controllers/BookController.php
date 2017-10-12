@@ -7,23 +7,38 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    public function __construct(Book $book)
+    {
+        $this->book = $book;
+    }
+
+
     public function index()
     {
-        if (request('searchBy') && request('searchValue')) {
-            $books = Book::where(request('searchBy'), request('searchValue'))->paginate(10);
-            
-            return view('books/index')->with(compact('books'));
+        $requestData = collect(request()->validate([
+            'title' => 'string|nullable',
+            'author' => 'string|nullable',
+            'sortBy' => 'in:title,author',
+            'direction' => 'in:asc,desc',
+        ]))->filter();
+
+        $append = [];
+
+        $books = $this->book;
+        
+        foreach ($requestData as $key => $value) {
+           if (in_array($key, ['title', 'author'])) {
+                $books = $books->where($key, 'like', "%{$value}%");
+            } else if ($key === 'sortBy' && !empty($value) && !empty($requestData['direction'])) {
+                $books = $books->orderBy($value, $requestData['direction']);
+            }
+
+            $append[$key] = $value; 
         }
 
-        if (request('sortBy')) {
-            $books = Book::orderBy(request('sortBy'), request('direction'))->paginate(10);
+        $books = $books->paginate(10);
 
-            return view('books/index')->with(compact('books'));
-        }
-
-        $books = Book::paginate(10);
-
-        return view('books/index')->with('books', $books);
+        return view('books/index')->with(['books' => $books, 'append' => $append]);
     }
 
     public function store()
