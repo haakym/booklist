@@ -5,14 +5,17 @@ namespace Tests\Feature;
 use App\Models\Book;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class ViewBookListTest extends TestCase
 {
-	use RefreshDatabase;
+    use RefreshDatabase;
 
     /** @test */
     function user_can_view_a_list_of_books()
     {
+        $this->withoutExceptionHandling();
+        
         $books = factory(Book::class, 5)->create();
         
         $this->get('/books')
