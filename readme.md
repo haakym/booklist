@@ -7,7 +7,7 @@
 # generate key
 > php artisan key:generate
 
-# if no database file, create database file
+# create database file
 > touch database/database.sqlite
 
 # to create the database tables
@@ -18,6 +18,9 @@
 
 # run app
 > php artisan serve
+
+# run tests
+# ./vendor/bin/phpunit
 ```
 
 ## Notes
