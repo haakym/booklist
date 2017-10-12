@@ -15,6 +15,11 @@ class ManageBookListTest extends TestCase
     {
         $book = factory(Book::class)->make();
 
+        $this->assertDatabaseMissing('books', [
+            'title' => $book->title,
+            'author' => $book->author,
+        ]);
+
         $this->post('/books', $book->toArray())
             ->assertSessionHas('status', 'success')
             ->assertSessionHas('message', 'New book added successfully!');
