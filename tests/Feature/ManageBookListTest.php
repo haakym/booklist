@@ -40,5 +40,4 @@ class ManageBookListTest extends TestCase
         ]);
     }
 
-    // delete a book that doesn't exist
 }

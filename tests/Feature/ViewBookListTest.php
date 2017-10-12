@@ -41,9 +41,9 @@ class ViewBookListTest extends TestCase
         ]);
 
         $responseAsc = $this->get('/books?sortBy=title&direction=asc')->original->getData()['books'];
-        $responseDesc = $this->get('/books?sortBy=title&direction=desc')->original->getData()['books'];
-
         $this->assertEquals($bookA->title, $responseAsc->first()->title);
+        
+        $responseDesc = $this->get('/books?sortBy=title&direction=desc')->original->getData()['books'];
         $this->assertEquals($bookZ->title, $responseDesc->first()->title);
     }
 
