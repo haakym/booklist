@@ -35,6 +35,11 @@ class ManageBookListTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
+        $this->assertDatabaseHas('books', [
+            'title' => $book->title,
+            'author' => $book->author,
+        ]);
+
         $this->delete("/books/{$book->id}", ['id' => $book->id])
             ->assertSessionHas('status', 'success')
             ->assertSessionHas('message', 'Book has been successfully removed!');
