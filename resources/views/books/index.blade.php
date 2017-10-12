@@ -58,7 +58,7 @@
                 @else
                     <div class="panel panel-body">
                         <div class="alert alert-warning">
-                            There are no books added yet! Please add a new book.
+                            No books to show
                         </div>
                     </div>
                 @endif
