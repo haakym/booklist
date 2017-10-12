@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            @include('partials/status-message')
             <!-- side-bar for add and search book -->
             <div class="col-md-4">
                 @include('books/_create')
