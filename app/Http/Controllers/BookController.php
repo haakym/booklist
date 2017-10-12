@@ -9,6 +9,12 @@ class BookController extends Controller
 {
     public function index()
     {
+        if (request('searchBy') && request('searchValue')) {
+            $books = Book::where(request('searchBy'), request('searchValue'))->paginate(10);
+            
+            return view('books/index')->with(compact('books'));
+        }
+
         if (request('sortBy')) {
             $books = Book::orderBy(request('sortBy'), request('direction'))->paginate(10);
 
