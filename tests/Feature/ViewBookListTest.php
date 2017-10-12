@@ -46,4 +46,24 @@ class ViewBookListTest extends TestCase
         $this->assertEquals($bookA->title, $responseAsc->first()->title);
         $this->assertEquals($bookZ->title, $responseDesc->first()->title);
     }
+
+    /** @test */
+    public function user_can_search_for_a_book_by_a_given_attribute()
+    {
+        $book1 = factory(Book::class)->create([
+            'title' => 'Deep Work',
+            'author' => 'Cal Newport'
+        ]);
+
+        $book2 = factory(Book::class)->create([
+            'title' => 'Laravel - Up and Running',
+            'author' => 'Matt Stauffer'
+        ]);
+
+        $response = $this->get('/books?searchBy=title&searchValue=Deep%20Work')
+            ->assertSee('Deep Work')
+            ->assertSee('Cal Newport')
+            ->assertDontSee('Laravel - Up and Running')
+            ->assertDontSee('Matt Stauffer');
+    }
 }
