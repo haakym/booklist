@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Book;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class ManageBookListTest extends TestCase
 {
@@ -14,8 +13,6 @@ class ManageBookListTest extends TestCase
     /** @test */
     function user_can_add_a_new_book()
     {
-        $this->withoutExceptionHandling();
-
         $book = factory(Book::class)->make();
 
         $this->post('/books', $book->toArray())
@@ -31,8 +28,6 @@ class ManageBookListTest extends TestCase
     /** @test */
     function user_can_delete_a_book()
     {
-        $this->withoutExceptionHandling();
-
         $book = factory(Book::class)->create();
 
         $this->delete("/books/{$book->id}", ['id' => $book->id])
