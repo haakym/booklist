@@ -30,21 +30,20 @@ class ViewBookListTest extends TestCase
     }
 
     /** @test */
-    function user_can_view_a_list_of_books_sorted_by_title()
+    function user_can_view_a_list_of_books_sorted_by_a_given_attribute()
     {
         $bookA = factory(Book::class)->create([
             'title' => 'Alice\'s Adventures in Wonderland',
-            'author' => 'Lewis Carol',
         ]);
 
         $bookZ = factory(Book::class)->create([
             'title' => 'Zen',
-            'author' => 'Phil Jackson',
         ]);
 
-        $response = $this->get('/books?sortBy=title&direction=asc');
+        $responseAsc = $this->get('/books?sortBy=title&direction=asc')->original->getData()['books'];
+        $responseDesc = $this->get('/books?sortBy=title&direction=desc')->original->getData()['books'];
 
-        // see z is first
-
+        $this->assertEquals($bookA->title, $responseAsc->first()->title);
+        $this->assertEquals($bookZ->title, $responseDesc->first()->title);
     }
 }
